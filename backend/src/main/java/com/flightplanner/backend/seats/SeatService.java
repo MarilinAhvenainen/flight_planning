@@ -20,7 +20,6 @@ public class SeatService {
         return seats;
     }
 
-    // Returns seats based on id
     public Optional<Seat> getSeat(Long id){
         return seatRepository.findById(id);
     }
@@ -29,13 +28,14 @@ public class SeatService {
         seatRepository.save(seat);
     }
 
-    public void bookSeat(Long id, Seat updatedSeat){
+    // Muudab istekoha broneeringu staatust.
+    public void bookSeat(Long id){
         Seat seat = seatRepository.findById(id).orElseThrow(() -> new RuntimeException("Seat not found"));
 
         if (Boolean.TRUE.equals(seat.getIsBooked())) {
             throw new IllegalStateException("Seat is already booked");
         }
-        seat.setIsBooked(updatedSeat.getIsBooked());
+        seat.setIsBooked(true);
 
         seatRepository.save(seat);
 

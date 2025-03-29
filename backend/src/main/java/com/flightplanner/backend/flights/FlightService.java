@@ -1,6 +1,5 @@
 package com.flightplanner.backend.flights;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,39 +12,35 @@ public class FlightService {
     @Autowired
     private FlightRepository flightRepository;
 
-    //Returns all flights
+    //Tagastab kõik lennud
     public List<Flight> getAllFlights() {
-        List<Flight> flights = new ArrayList<>();
-        // all flights from database
-        flightRepository.findAll().forEach(flights::add); 
-        
-        return flights;
+        return flightRepository.findAll();
     }
 
-    // Returns flight based on id
+    //Tagastab lennu vastavalt lennu id'le
     public Optional<Flight> getFlight(Long id){
         return flightRepository.findById(id);
     }
 
-    // Returns flight based on origin
+    // Tagastab lennud vastavalt alguspunktile
     public List<Flight> getFlightsByOrigin(String origin){
         return flightRepository.findByOrigin(origin);
     }
-    // Returns flight based on destination
+    // Tagastab lennud vastavalt sihtpunktile
     public List<Flight> getFlightsByDestination(String destination){
         return flightRepository.findByDestination(destination);
     }
-    // Returns flight based on origin and destination
+    // Tagastab lennud vastavalt algpunktile ja sihtpunktile
     public List<Flight> getFlightsByOriginAndDestination(String origin, String destination){
         return flightRepository.findByOriginAndDestination(origin, destination);
     }
 
-    // Inserts flight to database
+    // Lisab uue lennu
     public void addFlight(Flight flight){
         flightRepository.save(flight);
     }
 
-    // update flights
+    // uuendab lennu infot
     public void updateFlight(Long id, Flight updatedFlight){
         Flight flight = flightRepository.findById(id).orElseThrow(() -> new RuntimeException("Flight not found"));
 
@@ -58,7 +53,7 @@ public class FlightService {
         flightRepository.save(flight);
     }
 
-    //delete flights
+    //kustutab lennu
     public void deleteFlight(Long id) {
         flightRepository.deleteById(id);
     }
